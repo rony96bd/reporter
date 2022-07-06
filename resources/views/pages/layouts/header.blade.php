@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Approver</title>
+    <title>Reporter</title>
 
     <link rel="icon" href="{{ url('src/thumbs-up-solid.svg') }}" type="image/x-icon">
 
@@ -44,7 +44,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-thumbs-up"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Approver</div>
+                <div class="sidebar-brand-text mx-3">Reporter</div>
             </a>
 
             <!-- Divider -->
@@ -100,31 +100,6 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            @php
-                $user = Auth()->user();
-
-                $total_payable = App\Models\Brid::where('user_id', $user->id)
-                    ->where('status', 'Approved')
-                    ->sum('rate');
-                $paid = App\Models\Payment::where('user_id', $user->id)
-                    ->where('status', 'Approved')
-                    ->sum('taka');
-
-                $balance = $paid - $total_payable;
-
-                $total_payable_admin = App\Models\Brid::where('status', 'Approved')->sum('rate');
-                $paid_admin = App\Models\Payment::where('status', 'Approved')->sum('taka');
-
-                $balance_admin = $total_payable_admin - $paid_admin;
-
-                if ($balance < -500) {
-                    $badge_color = 'danger';
-                } else {
-                    $badge_color = 'success';
-                }
-
-            @endphp
-
             <!-- Main Content -->
             <div id="content">
 
@@ -132,14 +107,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <div class="hwrap">
                         <div class="hmove">
-                            <div class="hitem"><i class="fa-solid fa-angles-right"></i> জরুরী প্রয়োজনে ফোন করুন:
-                                01726795363 (আব্দুল্লাহ), 01722414101 (রনি)</div>
-                            <div class="hitem"><i class="fa-solid fa-angles-right"></i> প্রতি সপ্তাহে বৃহস্পতিবার সবাইকে পেমেন্ট করে ব্যালেন্স শূন্য করার জন্য অনুরোধ করছি।</div>
-                            <div class="hitem"><i class="fa-solid fa-angles-right"></i> পেমেন্ট করে অবশ্যই ঐ দিনই
-                                Approver Software এর Payment Info তে গিয়ে Add Payment করতে হবে।</div>
-                            <div style="display: none" class="hitem"><i class="fa-solid fa-angles-right"></i> Add Payment এ টাকার পরিমাণ ও
-                                Transaction ID দিতে হবে। যদি বাইরে থেকে বিকাশ বা নগদ করেন তাহলে যে নাম্বার দিয়ে টাকা
-                                সেন্ড করেছেন সেই নাম্বারটিই দিতে হবে।</div>
+                            <div class="hitem"><i class="fa-solid fa-angles-right"></i> নোটিশ</div>
                         </div>
                     </div>
                     <!-- Sidebar Toggle (Topbar) -->
@@ -155,12 +123,12 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-money-bill fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-{{ $badge_color }}">
-                                    @if ($user->is_admin == '1')
+                                <span class="badge badge-red">
+                                    {{-- @if ($user->is_admin == '1')
                                         {{ $balance_admin }}
                                     @else
                                         {{ $balance }}
-                                    @endif
+                                    @endif --}}
                                 </span>
                             </a>
                         </li>
@@ -229,11 +197,11 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="fa-solid fa-sack-dollar fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Balance:
-                                    @if ($user->is_admin == '1')
+                                    {{-- @if ($user->is_admin == '1')
                                         {{ $balance_admin }}
                                     @else
                                         {{ $balance }}
-                                    @endif
+                                    @endif --}}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('change-password') }}">
                                     <i class="fa-solid fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
